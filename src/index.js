@@ -1,5 +1,4 @@
 // TODO plan:
-//* Add between method
 // Get API method
 // *ProjectionExpression
 // *ConsistentRead
@@ -8,7 +7,7 @@
 // TODO create catch method for all errors;
 
 const { operators } = require('./parameters');
-const { compare } = require('./helpers');
+const { compare, between } = require('./helpers');
 const _params = {};
 class QueryBuilder {
   constructor (TableName, Method, Key) {
@@ -79,11 +78,13 @@ class QueryBuilder {
   /** @method
   * @name between
   *
-  * @param {string} param1 - Start of selection
-  * @param {string} param2 - End of selection
+  * @param {string} field - Start of selection
+  * @param {string} since - Start of selection
+  * @param {string} until - End of selection
   * */
-  between (param1, param2) {
-    if (!param1 && param2) return console.log('Wrong parameters');
+  between (field, since, until) {
+    if (!since && until) return console.log('Wrong parameters');
+    between(_params, field, since, until);
     return this;
   }
   getQuery () {
@@ -98,11 +99,11 @@ class QueryBuilder {
 }
 
 // Test example
-
 const test = new QueryBuilder('worldview_services', 'query');
 const query = test
-  // .where('test1[0]', '=', 'test111')
+  .where('test1[0]', '=', 'test111')
   .query('Key')
   .where('HCservice', '=', 'datadog')
+  .between('test', 1, 5)
   .getQuery();
 console.log(query);

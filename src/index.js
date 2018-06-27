@@ -96,6 +96,12 @@ class QueryBuilder {
     between(_params, field, since, until);
     return this;
   }
+
+   /** @method
+  * @name put
+  * Create new object or update existing
+  * @param {paramsObj} field - object with new data
+  * */
   put(paramsObj){
     this.method = 'put';
     _params = Object.assign({}, _baseParams, {Item: paramsObj});

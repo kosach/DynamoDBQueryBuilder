@@ -36,11 +36,11 @@ const ExpressionAttributeValues = (obj, field, value) => {
  * @param {eny} value
  */
 
-const compare = (obj, operator, field, value) => {
+const compare = (obj, operator, field, value, expressionType ) => {
   ExpressionAttributeNames(obj, field);
   ExpressionAttributeValues(obj, field, value);
-  if (!obj.FilterExpression) obj.FilterExpression = `#${field} ${operator} :${truncateFieldName(field)} `;
-  else obj.FilterExpression += `AND #${field} ${operator} :${truncateFieldName(field)} `;
+  if (!obj[expressionType]) obj[expressionType] = `#${field} ${operator} :${truncateFieldName(field)} `;
+  else obj[expressionType] += `AND #${field} ${operator} :${truncateFieldName(field)} `;
 };
 
 const between = (obj, field, since, until) => {
